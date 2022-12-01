@@ -26,8 +26,10 @@ class UnoGUI:
 
         # dump = dumpPile()
         
-        # AI_bot = AI()
-        # AI_bot.AI_cards()
+        AI_bot = AI()
+        
+
+
         # Draw pile
         self.Draw_pile_setup()
 
@@ -44,6 +46,7 @@ class Sounds(ABC):
 
     
     def click(self):
+        
         playsound('res/sounds/mouse_click_close.wav', False)
     
 class drawPile(Sounds):
@@ -59,21 +62,20 @@ class drawPile(Sounds):
         super().click()
     
 
-class Card(Sounds):
+class Card():
     def __init__(self):
-        super().__init__()
-        self.red_imageList = []
-        self.blue_imageList = []
-        self.green_imageList = []
-        self.yellow_imageList = []
+        pass
+        # self.red_imageList = {}
+        # self.blue_imageList = {}
+        # self.green_imageList = {}
+        # self.yellow_imageList = {}
 
-        self.red_labelList = []
-        self.blue_labelList = []
-        self.green_labelList = []
-        self.yellow_labelList = []
+        # self.red_labelList = []
+        # self.blue_labelList = []
+        # self.green_labelList = []
+        # self.yellow_labelList = []
 
-        self.Card_images()   
-        self.Card_setup()
+        
         
         #Label(window, text="first one", bg="#FF0099", fg="white").place(x=75, y=80)
     
@@ -82,52 +84,126 @@ class Card(Sounds):
         
         try:
             for i in numberList:
-                self.red_imageList.append(PhotoImage(file = f"res/second version/red/red_{str(numberList[i])}.png"))
+                self.red_imageList[i] = PhotoImage(file = f"res/second version/red/red_{str(numberList[i])}.png")
+                #self.red_imageList.append()
 
-                self.blue_imageList.append(PhotoImage(file = f"res/second version/blue/blue_{str(numberList[i])}.png"))
+                self.blue_imageList[i] = PhotoImage(file = f"res/second version/blue/blue_{str(numberList[i])}.png")
+                #self.blue_imageList.append()
 
-                self.green_imageList.append(PhotoImage(file = f"res/second version/green/green_{str(numberList[i])}.png"))
+                self.green_imageList[i] = PhotoImage(file = f"res/second version/green/green_{str(numberList[i])}.png")
+                #self.green_imageList.append()
 
-                self.yellow_imageList.append(PhotoImage(file = f"res/second version/yellow/yellow_{str(numberList[i])}.png"))
+                self.yellow_imageList[i] = PhotoImage(file = f"res/second version/yellow/yellow_{str(numberList[i])}.png")
+                #self.yellow_imageList.append()
 
         except FileNotFoundError:
             raise FileNotFoundError
-        
-  
+    
+   
     def Card_setup(self):
     
-        for i in range(len(self.red_imageList)):
-            self.red_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.red_imageList[i], command= self.click))
+        for i in range(len(self.red_imageList)): # i = key
+            
+            self.red_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.red_imageList[i], command= lambda m = f"{str(i)}": [self.click(f"red {m}")]))
             
         for i in range(len(self.blue_imageList)):
-            self.blue_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.blue_imageList[i], command= self.click))
+            self.blue_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.blue_imageList[i], command= lambda m = f"{str(i)}": [self.click(f"blue {m}"),]))
          
         for i in range(len(self.green_imageList)):
-            self.green_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.green_imageList[i], command= self.click))
+            self.green_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.green_imageList[i], command= lambda m = f"{str(i)}": [self.click(f"green {m}")]))
          
         for i in range(len(self.yellow_imageList)):
-            self.yellow_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.yellow_imageList[i], command= self.click))
-         
-      
+            self.yellow_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.yellow_imageList[i], command= lambda m = f"{str(i)}": [self.click(f"yellow {m}"),]))
+        
+    def click(self, title):
+        playsound('res/sounds/mouse_click_close.wav', False)
+        
+
+
 class dumpPile():
     def __init__(self):
         self.dumpPile = []
-
-
-    
-        
+ 
 class Player(Card):
     def __init__(self):
-        super().__init__()
+        
         self.player_numberList = []
         self.player_colorList = []
 
-        check_dict = self.player_cards()
-        print(check_dict)
-        self.place_the_cards()
+        self.player_red_imageList = {}
+        self.player_blue_imageList = {}
+        self.player_green_imageList = {}
+        self.player_yellow_imageList = {}
+
+        self.player_red_labelList = []
+        self.player_blue_labelList = []
+        self.player_green_labelList = []
+        self.player_yellow_labelList = []
+
+        self.player_check_dict = self.player_cards()
+        print(self.player_check_dict)
+        self.player_card_setup()
         
+    def player_card_images(self):
+        numberList = [i for i in range(10)]
+        
+        try:
+            for i in numberList:
+                self.player_red_imageList[i] = PhotoImage(file = f"res/second version/red/red_{str(numberList[i])}.png")
+                #self.red_imageList.append()
+
+                self.player_blue_imageList[i] = PhotoImage(file = f"res/second version/blue/blue_{str(numberList[i])}.png")
+                #self.blue_imageList.append()
+
+                self.player_green_imageList[i] = PhotoImage(file = f"res/second version/green/green_{str(numberList[i])}.png")
+                #self.green_imageList.append()
+
+                self.player_yellow_imageList[i] = PhotoImage(file = f"res/second version/yellow/yellow_{str(numberList[i])}.png")
+                #self.yellow_imageList.append()
+
+        except FileNotFoundError:
+            raise FileNotFoundError
+
+    def player_card_buttons(self):
+        self.player_card_images()
+        for i in range(len(self.player_red_imageList)): # i = key
+            
+            self.player_red_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_red_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"red {m}")]))
+            
+        for i in range(len(self.player_blue_imageList)):
+            self.player_blue_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_blue_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"blue {m}"),]))
+         
+        for i in range(len(self.player_green_imageList)):
+            self.player_green_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_green_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"green {m}")]))
+         
+        for i in range(len(self.player_yellow_imageList)):
+            self.player_yellow_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_yellow_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"yellow {m}"),]))
+    
     def player_card_setup(self):
-        super().Card_setup()
+        self.player_card_buttons()
+        i = 0
+        
+        while i != len(self.player_colorList):
+            color = self.player_colorList[i]
+            number = self.player_numberList[i]
+
+
+            if color == "red":
+                card = self.player_red_labelList[number]
+            
+            elif color == "blue":
+                card = self.player_blue_labelList[number]
+            
+            elif color == "green":
+                card = self.player_green_labelList[number]
+            
+            elif color == "yellow":
+                card = self.player_yellow_labelList[number]
+ 
+            card.place(x = self.x, y = self.y)
+            self.x += 80
+
+            i += 1
 
     def player_cards(self):
         
@@ -167,66 +243,140 @@ class Player(Card):
         
         return check_dict
         
-    def place_the_cards(self):
+    
+   
+    def player_click(self, title):
+        playsound('res/sounds/mouse_click_close.wav', False)
+        print("player click: ", title)
+        if title in self.player_check_dict:
+            print("Player hit")
+
+class AI(Card):
+    def __init__(self):
+        
+        self.AI_numberList = []
+        self.AI_colorList = []
+
+        self.AI_red_imageList = {}
+        self.AI_blue_imageList = {}
+        self.AI_green_imageList = {}
+        self.AI_yellow_imageList = {}
+
+        self.AI_red_labelList = []
+        self.AI_blue_labelList = []
+        self.AI_green_labelList = []
+        self.AI_yellow_labelList = []
+
+        check_dict = self.AI_cards()
+        print(check_dict)
+        self.AI_card_setup()
+        
+    def AI_card_images(self):
+        numberList = [i for i in range(10)]
+        
+        try:
+            for i in numberList:
+                self.AI_red_imageList[i] = PhotoImage(file = f"res/second version/red/red_{str(numberList[i])}.png")
+                #self.red_imageList.append()
+
+                self.AI_blue_imageList[i] = PhotoImage(file = f"res/second version/blue/blue_{str(numberList[i])}.png")
+                #self.blue_imageList.append()
+
+                self.AI_green_imageList[i] = PhotoImage(file = f"res/second version/green/green_{str(numberList[i])}.png")
+                #self.green_imageList.append()
+
+                self.AI_yellow_imageList[i] = PhotoImage(file = f"res/second version/yellow/yellow_{str(numberList[i])}.png")
+                #self.yellow_imageList.append()
+
+        except FileNotFoundError:
+            raise FileNotFoundError
+
+    def AI_card_buttons(self):
+        self.AI_card_images()
+        for i in range(len(self.AI_red_imageList)): # i = key
+            
+            self.AI_red_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.AI_red_imageList[i], command= lambda m = f"{str(i)}": [self.AI_click(f"red {m}")]))
+            
+        for i in range(len(self.AI_blue_imageList)):
+            self.AI_blue_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.AI_blue_imageList[i], command= lambda m = f"{str(i)}": [self.AI_click(f"blue {m}"),]))
+         
+        for i in range(len(self.AI_green_imageList)):
+            self.AI_green_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.AI_green_imageList[i], command= lambda m = f"{str(i)}": [self.AI_click(f"green {m}")]))
+         
+        for i in range(len(self.AI_yellow_imageList)):
+            self.AI_yellow_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.AI_yellow_imageList[i], command= lambda m = f"{str(i)}": [self.AI_click(f"yellow {m}"),]))
+    
+    def AI_card_setup(self):
+        self.AI_card_buttons()
         i = 0
         
-        while i != len(self.player_colorList):
-            color = self.player_colorList[i]
-            number = self.player_numberList[i]
+        while i != len(self.AI_colorList):
+            color = self.AI_colorList[i]
+            number = self.AI_numberList[i]
 
 
             if color == "red":
-                card = self.red_labelList[number]
+                card = self.AI_red_labelList[number]
             
             elif color == "blue":
-                card = self.blue_labelList[number]
+                card = self.AI_blue_labelList[number]
             
             elif color == "green":
-                card = self.green_labelList[number]
+                card = self.AI_green_labelList[number]
             
             elif color == "yellow":
-                card = self.yellow_labelList[number]
+                card = self.AI_yellow_labelList[number]
  
             card.place(x = self.x, y = self.y)
             self.x += 80
 
             i += 1
-        
-    def click(self, i = -1):
-        super().click()
-        
-        print(i)
 
+    def AI_cards(self):
+        
+        self.x = 10
+        self.y = 10
+        
+        i = 0
+        
+        check_dict = {}
+        temp = False
 
-# class AI(Card):
-#     def __init__(self):
-#         super().__init__()
-#     
-#     def AI_cards(self):
-#         x = 10
-#         y = 10
-#         
-#         i = 0
-#         list = []
-#         temp = False
-# 
-#         while(i != 7):
-#             number = random.randint(0, 9)
-# 
-#             if number not in list:
-#                 list.append(number)
-#                 temp = True
-#             else:
-#                 temp = False
-#             
-#             if temp == True:
-#                 self.Card_put(number, x, y)
-#                 x += 80
-#                 i += 1
-#             else:
-#                 continue
-#         
-# 
+        while(i != 7):
+            number = random.randint(0, 9)
+            color = random.randint(0,3)
+            
+            self.AI_numberList.append(number)
+            self.AI_colorList.append(colorList[color])
+            
+        
+            color = self.AI_colorList[i]
+            number = self.AI_numberList[i]
+            number_str = str(self.AI_numberList[i])
+            key = color + f" {number_str}"
+            if key in check_dict:
+                self.AI_colorList.pop()
+                self.AI_numberList.pop()
+                print(Exception("Sorry, No duplicates"))
+                continue
+                 
+                
+            check_dict[key] = i
+
+            i += 1
+        
+        print("AI_numberList : ", self.AI_numberList)
+        print("AI_colorList : ", self.AI_colorList)
+        
+        return check_dict
+        
+    
+   
+    def AI_click(self, title):
+        playsound('res/sounds/mouse_click_close.wav', False)
+        print("AI click: ", title)
+        
+
             
 def main():
     unogui = UnoGUI()
