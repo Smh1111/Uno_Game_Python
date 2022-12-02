@@ -3,6 +3,7 @@ import random
 from playsound import playsound
 from copy import deepcopy
 from abc import ABC, abstractmethod
+from tkinter import ttk
 
 colorList = ["red", "blue", "green", "yellow"]
 
@@ -124,9 +125,13 @@ class dumpPile():
     def __init__(self):
         self.dumpPile = []
  
-class Player(Card):
+class Player():
     def __init__(self):
+        self._x = 500
+        self._y = 200
         
+        self.previous_card = 0
+
         self.player_numberList = []
         self.player_colorList = []
 
@@ -169,16 +174,30 @@ class Player(Card):
         for i in range(len(self.player_red_imageList)): # i = key
             
             self.player_red_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_red_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"red {m}")]))
-            
+        
+        print()
+        print("player_red_labelList = ", self.player_red_labelList)
+        print()
+        
         for i in range(len(self.player_blue_imageList)):
             self.player_blue_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_blue_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"blue {m}"),]))
-         
+        print()
+        
+        print("player_blue_labelList = ", self.player_blue_labelList)
+        print()
+        
         for i in range(len(self.player_green_imageList)):
             self.player_green_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_green_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"green {m}")]))
-         
+        
+        print("player_green_labelList = ", self.player_green_labelList)
+        print()
+        
         for i in range(len(self.player_yellow_imageList)):
             self.player_yellow_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_yellow_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"yellow {m}"),]))
-    
+
+        print("player_yellow_labelList = ", self.player_yellow_labelList)
+        print()
+        
     def player_card_setup(self):
         self.player_card_buttons()
         i = 0
@@ -242,14 +261,63 @@ class Player(Card):
         print("player_colorList : ", self.player_colorList)
         
         return check_dict
-        
-    
-   
+         
     def player_click(self, title):
         playsound('res/sounds/mouse_click_close.wav', False)
+
         print("player click: ", title)
-        if title in self.player_check_dict:
-            print("Player hit")
+        
+        self.player_hit_the_card(title)
+        
+        del self.player_check_dict[title]
+
+        print("Remaining: \n")
+        print(self.player_check_dict)
+
+
+    def player_hit_the_card(self, title):
+        
+        print("Player hit ", title)
+
+        color, number = title.split(" ")
+        index = int(number)
+        print(f"Color is {color}, Index number {index} \n")
+        if color == "red":
+            card = self.player_red_labelList[index]
+            
+            
+        if color == "blue":
+            card = self.player_blue_labelList[index]
+            
+        
+        if color == "green":
+            card = self.player_green_labelList[index]
+            
+        
+        if color == "yellow":
+            card = self.player_yellow_labelList[index]
+            
+
+        print("Card is this:", card)
+        print()
+        try:
+            self.previous_card.destroy()
+        except:
+            print("hello")
+        try:
+            
+            
+            card.place(x = self._x, y = self._y)
+            
+            # ttk.card.pack()
+            # card.place(x = self._x, y = self._y)
+            # canvas.pack()
+            print("Card is placed \n")
+
+        except:
+            raise Exception("Thie does not happen!")
+
+        self.previous_card = card
 
 class AI(Card):
     def __init__(self):
