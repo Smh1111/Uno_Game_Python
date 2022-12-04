@@ -27,7 +27,7 @@ class UnoGUI:
 
         # dump = dumpPile()
         
-        AI_bot = AI()
+        # AI_bot = AI()
         
 
 
@@ -127,9 +127,9 @@ class dumpPile():
  
 class Player():
     def __init__(self):
-        self._x = 500
-        self._y = 200
-        
+        self.x = 10
+        self.y = 570
+
         self.previous_card = 0
 
         self.player_numberList = []
@@ -146,6 +146,8 @@ class Player():
         self.player_yellow_labelList = []
 
         self.player_check_dict = self.player_cards()
+
+        self.player_card_buttons()
         print(self.player_check_dict)
         self.player_card_setup()
         
@@ -175,49 +177,60 @@ class Player():
             
             self.player_red_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_red_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"red {m}")]))
         
-        print()
-        print("player_red_labelList = ", self.player_red_labelList)
-        print()
+        # print()
+        # print("player_red_labelList = ", self.player_red_labelList)
+        # print()
         
         for i in range(len(self.player_blue_imageList)):
             self.player_blue_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_blue_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"blue {m}"),]))
-        print()
-        
-        print("player_blue_labelList = ", self.player_blue_labelList)
-        print()
+        # print()
+        # 
+        # print("player_blue_labelList = ", self.player_blue_labelList)
+        # print()
         
         for i in range(len(self.player_green_imageList)):
             self.player_green_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_green_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"green {m}")]))
         
-        print("player_green_labelList = ", self.player_green_labelList)
-        print()
+        # print("player_green_labelList = ", self.player_green_labelList)
+        # print()
         
         for i in range(len(self.player_yellow_imageList)):
             self.player_yellow_labelList.append(Button(window, width= 80, height = 120, border= 3, image = self.player_yellow_imageList[i], command= lambda m = f"{str(i)}": [self.player_click(f"yellow {m}"),]))
 
-        print("player_yellow_labelList = ", self.player_yellow_labelList)
-        print()
+        # print("player_yellow_labelList = ", self.player_yellow_labelList)
+        # print()
         
-    def player_card_setup(self):
-        self.player_card_buttons()
+    def player_card_setup(self, owned_colorList = 0, owned_numberList = 0):
+        
+        
+
+        if owned_colorList != 0 and owned_numberList != 0:
+            print("You got heree................")
+            
+            self.player_colorList = owned_colorList
+            self.player_numberList = owned_numberList
+
+        print("============================")
+        print("self.player_colorList:\n", self.player_colorList)
+        print("self.player_numberList:\n", self.player_numberList)
+
         i = 0
-        
         while i != len(self.player_colorList):
             color = self.player_colorList[i]
             number = self.player_numberList[i]
 
 
             if color == "red":
-                card = self.player_red_labelList[number]
+                card = self.player_red_labelList[int(number)]
             
             elif color == "blue":
-                card = self.player_blue_labelList[number]
+                card = self.player_blue_labelList[int(number)]
             
             elif color == "green":
-                card = self.player_green_labelList[number]
+                card = self.player_green_labelList[int(number)]
             
             elif color == "yellow":
-                card = self.player_yellow_labelList[number]
+                card = self.player_yellow_labelList[int(number)]
  
             card.place(x = self.x, y = self.y)
             self.x += 80
@@ -225,10 +238,7 @@ class Player():
             i += 1
 
     def player_cards(self):
-        
-        self.x = 10
-        self.y = 570
-        
+
         i = 0
         
         check_dict = {}
@@ -257,8 +267,8 @@ class Player():
 
             i += 1
         
-        print("player_numberList : ", self.player_numberList)
-        print("player_colorList : ", self.player_colorList)
+        # print("player_numberList : ", self.player_numberList)
+        # print("player_colorList : ", self.player_colorList)
         
         return check_dict
          
@@ -271,8 +281,12 @@ class Player():
         
         del self.player_check_dict[title]
 
-        print("Remaining: \n")
+        
+        print("=======Remaining:=========")
         print(self.player_check_dict)
+        print("==========================")
+
+        self.player_card_Resetup()
 
 
     def player_hit_the_card(self, title):
@@ -282,18 +296,16 @@ class Player():
         color, number = title.split(" ")
         index = int(number)
         print(f"Color is {color}, Index number {index} \n")
+
         if color == "red":
             card = self.player_red_labelList[index]
-            
             
         if color == "blue":
             card = self.player_blue_labelList[index]
             
-        
         if color == "green":
             card = self.player_green_labelList[index]
-            
-        
+                
         if color == "yellow":
             card = self.player_yellow_labelList[index]
             
@@ -303,11 +315,11 @@ class Player():
         try:
             self.previous_card.destroy()
         except:
+             
             print("hello")
         try:
-            
-            
-            card.place(x = self._x, y = self._y)
+
+            card.place(x = 500, y = 200)
             
             # ttk.card.pack()
             # card.place(x = self._x, y = self._y)
@@ -315,9 +327,27 @@ class Player():
             print("Card is placed \n")
 
         except:
-            raise Exception("Thie does not happen!")
+            raise Exception("This does not happen!")
 
-        self.previous_card = card
+        self.previous_card = card   # Card on the board
+
+    def player_card_Resetup(self):
+
+        remaining_colorList = []
+        remaining_numberList = []
+        
+        for key in self.player_check_dict:
+            color, number = key.split(" ")
+            remaining_colorList.append(color)
+            remaining_numberList.append(number)
+
+        print("=======Remaining:=========")
+        print(remaining_colorList, remaining_numberList)
+        print("==========================")
+        self.x = 10
+        self.y = 570
+        self.player_card_setup(remaining_colorList, remaining_numberList)
+        
 
 class AI(Card):
     def __init__(self):
@@ -445,7 +475,9 @@ class AI(Card):
         print("AI click: ", title)
         
 
-            
+# class game_logic:
+#     def __init__(self):
+
 def main():
     unogui = UnoGUI()
 
