@@ -1,0 +1,7 @@
+Student-ID :   65011693
+Gmail      :   mobilesoemoehtet11@gmail.com, 65011693@kmitl.ac.th
+LineID     :   111abcdefg222
+Ph-no      :   093-715-5837
+Date       :   Created at 16.Dec.2022
+About      :   This is an individual python first semester project as a first year student at KMITL.
+

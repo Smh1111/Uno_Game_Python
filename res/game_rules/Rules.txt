@@ -1,0 +1,23 @@
+
+
+                                INTRODUCTION
+
+This is a simple Uno card game. The game is like a landmine game. You don't know the 
+lucky card or the correct card that the program has chosen at the beginning. 
+(It could be the bad card if you want to think other way around.)
+
+                                HOW TO PLAY
+
+There is only one way to find out. It is to click out each card and wait for the pop-up
+warning box that will pop up if you found the correct box and the program will ask you
+whether you start a new game or not. 
+
+If it doesn't pop up, you are okay to click next card and look for the card.
+
+                                MODES: 
+Two modes
+
+Single player mode : You play with an AI that will automatically choose the next card
+Multiplayer mode   : You play with your friends or you play alone
+
+
