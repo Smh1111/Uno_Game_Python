@@ -46,7 +46,7 @@ REMAINING_COLORS_NUMBERS_LIST = []
 
 def window_setup():
     
-    window.configure(bg="blue")
+    
 
     window.geometry(f"{WIDTH}x{HEIGHT}")
 
@@ -349,6 +349,7 @@ def top_bar():
 
     top = tk.Menu(window)
     window.config(menu=top)
+
     jeu = tk.Menu(top, tearoff=False)
     top.add_cascade(label='Game', menu=jeu)
     submenu = tk.Menu(jeu, tearoff=False)
@@ -379,7 +380,12 @@ def top_bar():
         label='Multiplayer',
         command = set_multiplayer_mode
     )
+    color_menu = tk.Menu(top, tearoff=False)
 
+    top.add_cascade(label="Theme", menu=color_menu)
+
+    color_menu.add_command(label="Bacground Color", command=color_choser)
+    
     help_menu = tk.Menu(top, tearoff=False)
     top.add_cascade(label='Help', menu=help_menu)
     help_menu.add_command(label='How to play?', command = print_rules)
@@ -463,6 +469,10 @@ def about() -> None:
     lbl_about.pack(side=tk.TOP)
     about_window.mainloop()
 
+def color_choser() -> None:
+    user_color = colorchooser.askcolor()[1]
+    window.config(bg = user_color)
+
 def restart():
         import sys
         print("argv was",sys.argv)
@@ -472,6 +482,7 @@ def restart():
         import os
         os.execv(sys.executable, ['python'] + sys.argv)
     
+
 #=======================#=======================#=======================
 
 def main():
