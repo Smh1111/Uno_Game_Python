@@ -46,8 +46,6 @@ REMAINING_COLORS_NUMBERS_LIST = []
 
 def window_setup():
     
-    
-
     window.geometry(f"{WIDTH}x{HEIGHT}")
 
 class FirstDeck():

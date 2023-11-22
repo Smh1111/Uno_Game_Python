@@ -13,9 +13,10 @@ draw_Card = 0
 player_Card = 0
 
 player_draw_Card_List = []
-
 window = Tk()
 window.title("Uno Game")
+
+start = 0
 
 def window_setup():
     
@@ -127,16 +128,21 @@ class Card():
         
         elif color == 3:
             self.card = self.yellow_labelList[int(number)]
- 
-        self.card.place(x = 500, y = 250)
+
+        if start == 0:
+            self.card.place(x = 10, y = 620)
+        else:
+            self.card.place(x = 500, y = 250)
         print("Cardddddddddddddddddddddddddddd", self.card)
         return self.card
     
         
-    def click(self):
+    def click(self, title = ""):
         playsound('res/sounds/mouse_click_close.wav', False)
 
-start = 0
+        print("hi", title)
+
+
 class drawPile(Card):
     def __init__(self):
         super().__init__()
@@ -145,7 +151,7 @@ class drawPile(Card):
             self.click()
             start += 1
  
-    def click(self):
+    def click(self, title = ""):
         super().click()
         global Player_clicked
         global draw_Card
